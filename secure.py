@@ -1,15 +1,17 @@
-import os
-import subprocess
+from subprocess import call
 from pathlib import Path
 
 
+def secure():
+    for file in Path.home().iterdir():
+        if file.is_dir():
+            call(["chmod","700",file])
+        if file.is_file():
+            call(["chmod","600",file])
+
+
 def main():
-    home = Path.home()
-    for file in os.listdir(home):
-        if os.path.isdir(file):
-            subprocess.call(["chmod","700",f"{home}{os.sep}{file}"])
-        if os.path.isfile(file):
-            subprocess.call(["chmod","600",f"{home}{os.sep}{file}"])
+    secure()
 
 
 if __name__ == "__main__":
